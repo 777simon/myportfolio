@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)gdqq195cht*al64j-@qd4*j@mhkyyrj=pieiy*fypxf&y^x&1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # Set to False for production
 
-ALLOWED_HOSTS = []
+# Update this line to allow Vercel domains:
+ALLOWED_HOSTS = ['.vercel.app', 'now.sh', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -42,12 +43,14 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'resume.urls'
@@ -128,3 +131,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+# This helps WhiteNoise serve files efficiently
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

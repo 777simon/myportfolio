@@ -2,15 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "pofolio/wsgi.py",
+      "src": "resume/wsgi.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python3.12" }
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "pofolio/wsgi.py"
+      "dest": "resume/wsgi.py"
     }
   ]
 }
