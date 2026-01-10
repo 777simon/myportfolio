@@ -136,8 +136,5 @@ STATICFILES_DIRS = [
 # This helps WhiteNoise serve files efficiently
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# This is where Django will collect all files during the build
+# This must match the folder name in your build script
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-
-# Ensure STATIC_URL has a leading slash for production
-STATIC_URL = '/static/'

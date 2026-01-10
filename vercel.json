@@ -3,13 +3,13 @@
   "builds": [
     {
       "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "staticfiles_build" }
+      "use": "@vercel/python",
+      "config": { "runtime": "python3.12" }
     },
     {
       "src": "resume/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
+      "config": { "runtime": "python3.12" }
     }
   ],
   "routes": [
