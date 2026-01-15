@@ -134,6 +134,7 @@ STATICFILES_DIRS = [
 
 # This helps WhiteNoise serve files efficiently
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+WHITENOISE_USE_FINDERS = True
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build')
