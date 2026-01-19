@@ -48,3 +48,33 @@ ul{
     }
 }
 
+/* Title Typewriter Effect */
+.typing-title {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #0d6efd; /* Cursor color */
+  animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+}
+
+/* Typing logic */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* Cursor blinking */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #0d6efd; }
+}
+
+/* Body text smooth fade-in */
+.fade-in-text {
+    animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
