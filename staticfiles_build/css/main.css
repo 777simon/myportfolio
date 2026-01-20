@@ -1,53 +1,174 @@
-body{
-    background-color:#F8F8F8!important;
+/* ===================================
+   SIMON'S PORTFOLIO - MAIN STYLES
+   =================================== */
+
+/* ========== BASE STYLES ========== */
+body {
+    background-color: #F8F8F8 !important;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+    background-attachment: fixed;
 }
 
-#profile-wrapper{
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== PROFILE SECTION ========== */
+#profile-wrapper {
     text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+    border-radius: 15px !important;
 }
 
-#profile-pic{
+#profile-pic {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     margin-left: auto;
     margin-right: auto;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 768px) {
-    #profile-pic {
-        width: 100px;
-        height: 100px;
-    }
+#profile-pic:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.3);
 }
 
-ul{
+/* ========== LISTS & SOCIAL LINKS ========== */
+ul {
     padding: 0;
     list-style-type: none;
-
 }
 
-.social-links,ul,li{
+.social-links, ul, li {
     list-style-type: none;
     display: inline-block;
 }
 
-.social{
+.social-links {
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.social-links li {
+    margin: 0 8px;
+}
+
+.social {
     width: 20px;
     height: 20px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 50%;
+    padding: 2px;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    
-    .card {
-        margin-bottom: 20px;
-    }
+.social:hover {
+    background-color: rgba(102, 126, 234, 0.1);
 }
 
+/* ========== CARDS ========== */
+.card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 25px;
+    border-radius: 12px;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.typing-title {
+    font-weight: 600;
+    color: #333;
+    position: relative;
+    display: inline-block;
+}
+
+.fade-in-text {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: #555;
+}
+
+h5 {
+    color: #333;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h5::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+.card-body p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 0.95em;
+}
+
+b, strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* ========== LINKS ========== */
+a {
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+a:focus, button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* ========== DIVIDERS ========== */
+hr {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+    margin: 15px 0;
+}
+
+/* ========== LAYOUT ========== */
+.container {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+/* ========== ANIMATIONS ========== */
+
+/* Existing fade-in animation */
 .animate-text {
     opacity: 0;
     animation: fadeIn 1s ease-in-out forwards;
@@ -58,5 +179,115 @@ ul{
 }
 
 @keyframes fadeIn {
-    to { opacity: 1; }
+    to { 
+        opacity: 1; 
+    }
+}
+
+/* Floating animation for profile picture */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Gradient shift animation for text */
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+}
+
+/* Pulse glow effect */
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    50% {
+        box-shadow: 0 5px 25px rgba(102, 126, 234, 0.5);
+    }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.loaded {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    #profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+    
+    h4 {
+        font-size: 1.3em;
+    }
+    
+    h5 {
+        font-size: 1.1em;
+    }
+    
+    .social-links li {
+        margin: 0 5px;
+    }
+    
+    /* Reduce animations on mobile for performance */
+    #profile-pic {
+        animation: none !important;
+    }
+}
+
+/* ========== ACCESSIBILITY ========== */
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+    .social-links {
+        display: none;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    body {
+        background: white !important;
+    }
 }
