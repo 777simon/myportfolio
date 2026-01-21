@@ -1,0 +1,254 @@
+{% extends 'pofolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="services-hero">
+    <div class="container text-center">
+        <h1 class="hero-title">My Services</h1>
+        <p class="hero-subtitle">Professional web development solutions tailored to your needs</p>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="services-section">
+    <div class="container">
+        <div class="row">
+            {% for service in services %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        {% if service.icon_class %}
+                        <i class="{{ service.icon_class }}"></i>
+                        {% elif service.image %}
+                        <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                        {% else %}
+                        <i class="fas fa-code"></i>
+                        {% endif %}
+                    </div>
+                    <h3>{{ service.title }}</h3>
+                    <p class="service-description">{{ service.short_description }}</p>
+                    <div class="service-price">
+                        <strong>{{ service.price_range }}</strong>
+                        <span>{{ service.pricing_type }}</span>
+                    </div>
+                    <ul class="service-features">
+                        {% for feature in service.get_features_list|slice:":5" %}
+                        <li><i class="fas fa-check"></i> {{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'contact' %}?service={{ service.slug }}" class="btn-service">
+                        Get Started <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No services available at the moment. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+{% if testimonials %}
+<section class="testimonials-section">
+    <div class="container">
+        <h2 class="section-heading">Client Testimonials</h2>
+        <div class="row">
+            {% for testimonial in testimonials %}
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        {% for i in "12345"|make_list %}
+                        <i class="fas fa-star {% if forloop.counter > testimonial.rating %}empty{% endif %}"></i>
+                        {% endfor %}
+                    </div>
+                    <p>"{{ testimonial.testimonial }}"</p>
+                    <div class="testimonial-author">
+                        {% if testimonial.client_photo %}
+                        <img src="{{ testimonial.client_photo.url }}" alt="{{ testimonial.client_name }}">
+                        {% else %}
+                        <div class="avatar">{{ testimonial.client_name|slice:":1" }}</div>
+                        {% endif %}
+                        <div>
+                            <h6>{{ testimonial.client_name }}</h6>
+                            <small>{{ testimonial.client_position }}{% if testimonial.client_company %}, {{ testimonial.client_company }}{% endif %}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container text-center">
+        <h2>Ready to Start Your Project?</h2>
+        <p>Let's discuss how I can help bring your vision to life</p>
+        <a href="{% url 'contact' %}" class="btn-cta-primary">
+            <i class="fas fa-envelope"></i> Get In Touch
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.services-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 5rem 0 3rem;
+    color: white;
+}
+
+.services-section {
+    padding: 4rem 0;
+}
+
+.service-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.service-card h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.service-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.service-price {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.service-price strong {
+    display: block;
+    color: #667eea;
+    font-size: 1.3rem;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    color: #555;
+}
+
+.service-features i {
+    color: #667eea;
+    margin-right: 0.5rem;
+}
+
+.btn-service {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-service:hover {
+    transform: translateX(5px);
+    color: white;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.testimonials-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+
+.stars {
+    color: #ffc107;
+    margin-bottom: 1rem;
+}
+
+.stars .empty {
+    color: #ddd;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.testimonial-author img,
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.avatar {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+</style>
+{% endblock %}

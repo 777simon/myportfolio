@@ -1,0 +1,602 @@
+{% extends 'pofolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<!-- Project Header -->
+<section class="project-header">
+    <div class="container">
+        <div class="back-link">
+            <a href="{% url 'projects' %}">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+        </div>
+        
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="project-category">
+                    <i class="fas fa-tag"></i> {{ project.get_category_display }}
+                </span>
+                <h1 class="project-title">{{ project.title }}</h1>
+                <p class="project-lead">{{ project.short_description|default:project.description|truncatewords:30 }}</p>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>{{ project.created_at|date:"F Y" }}</span>
+                    </div>
+                    {% if project.featured %}
+                    <div class="meta-item featured-badge">
+                        <i class="fas fa-star"></i>
+                        <span>Featured Project</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="project-actions">
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" class="btn-action btn-github">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                    {% endif %}
+                    {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" class="btn-action btn-live">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    {% endif %}
+                    {% if project.demo_video %}
+                    <a href="{{ project.demo_video }}" target="_blank" class="btn-action btn-video">
+                        <i class="fas fa-play-circle"></i> Watch Demo
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Images -->
+<section class="project-gallery">
+    <div class="container">
+        {% if project.thumbnail %}
+        <div class="main-image">
+            <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}">
+        </div>
+        {% endif %}
+        
+        {% if project.image1 or project.image2 or project.image3 %}
+        <div class="gallery-grid">
+            {% if project.image1 %}
+            <div class="gallery-item">
+                <img src="{{ project.image1.url }}" alt="{{ project.title }} screenshot 1">
+            </div>
+            {% endif %}
+            {% if project.image2 %}
+            <div class="gallery-item">
+                <img src="{{ project.image2.url }}" alt="{{ project.title }} screenshot 2">
+            </div>
+            {% endif %}
+            {% if project.image3 %}
+            <div class="gallery-item">
+                <img src="{{ project.image3.url }}" alt="{{ project.title }} screenshot 3">
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="project-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="detail-section">
+                    <h2>About This Project</h2>
+                    <div class="project-description">
+                        {{ project.description|linebreaks }}
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h2>Technologies Used</h2>
+                    <div class="tech-stack">
+                        {% for tech in project.get_tech_list %}
+                        <div class="tech-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>{{ tech }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="project-sidebar">
+                    <div class="sidebar-card">
+                        <h3>Project Info</h3>
+                        <ul class="info-list">
+                            <li>
+                                <strong>Category:</strong>
+                                <span>{{ project.get_category_display }}</span>
+                            </li>
+                            <li>
+                                <strong>Date:</strong>
+                                <span>{{ project.created_at|date:"F d, Y" }}</span>
+                            </li>
+                            {% if project.github_url %}
+                            <li>
+                                <strong>Repository:</strong>
+                                <a href="{{ project.github_url }}" target="_blank">View on GitHub</a>
+                            </li>
+                            {% endif %}
+                            {% if project.live_url %}
+                            <li>
+                                <strong>Live Site:</strong>
+                                <a href="{{ project.live_url }}" target="_blank">Visit Website</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-card">
+                        <h3>Share This Project</h3>
+                        <div class="share-buttons">
+                            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Check out {{ project.title }}" target="_blank" class="share-btn twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-btn facebook">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/shareArticle?url={{ request.build_absolute_uri }}&title={{ project.title }}" target="_blank" class="share-btn linkedin">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects -->
+{% if related_projects %}
+<section class="related-projects">
+    <div class="container">
+        <h2 class="section-heading">Related Projects</h2>
+        <div class="row">
+            {% for related in related_projects %}
+            <div class="col-md-4 mb-4">
+                <div class="project-card-mini">
+                    <div class="project-image-mini">
+                        {% if related.thumbnail %}
+                        <img src="{{ related.thumbnail.url }}" alt="{{ related.title }}">
+                        {% else %}
+                        <div class="placeholder-mini">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="project-info-mini">
+                        <h4>{{ related.title }}</h4>
+                        <p>{{ related.short_description|truncatewords:15 }}</p>
+                        <a href="{% url 'project_detail' related.slug %}" class="btn-view-mini">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container text-center">
+        <h2>Interested in Working Together?</h2>
+        <p>Let's discuss your project and how I can help</p>
+        <a href="{% url 'contact' %}" class="btn-cta-primary">
+            <i class="fas fa-envelope"></i> Get In Touch
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Project Header */
+.project-header {
+    padding: 3rem 0 2rem;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+}
+
+.back-link {
+    margin-bottom: 2rem;
+}
+
+.back-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.back-link a:hover {
+    transform: translateX(-5px);
+}
+
+.project-category {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.project-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.project-lead {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.project-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+}
+
+.meta-item i {
+    color: #667eea;
+}
+
+.featured-badge {
+    color: #ffc107;
+}
+
+.featured-badge i {
+    color: #ffc107;
+}
+
+.project-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-github {
+    background: #333;
+    color: white;
+}
+
+.btn-github:hover {
+    background: #000;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.btn-live {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn-live:hover {
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.btn-video {
+    background: #ff4757;
+    color: white;
+}
+
+.btn-video:hover {
+    background: #ee5a6f;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Project Gallery */
+.project-gallery {
+    padding: 3rem 0;
+}
+
+.main-image {
+    margin-bottom: 2rem;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.main-image img {
+    width: 100%;
+    display: block;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+}
+
+.gallery-item img {
+    width: 100%;
+    display: block;
+}
+
+/* Project Details */
+.project-details {
+    padding: 3rem 0;
+}
+
+.detail-section {
+    margin-bottom: 3rem;
+}
+
+.detail-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.project-description {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.tech-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tech-item i {
+    color: #667eea;
+}
+
+/* Sidebar */
+.project-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+.sidebar-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-list li:last-child {
+    border-bottom: none;
+}
+
+.info-list strong {
+    color: #333;
+}
+
+.info-list span,
+.info-list a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.info-list a:hover {
+    text-decoration: underline;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.share-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-btn.twitter {
+    background: #1da1f2;
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+}
+
+.share-btn.linkedin {
+    background: #0077b5;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+    color: white;
+}
+
+/* Related Projects */
+.related-projects {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.section-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.project-card-mini {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.project-card-mini:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+}
+
+.project-image-mini {
+    height: 180px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.project-image-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-mini {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+}
+
+.project-info-mini {
+    padding: 1.5rem;
+}
+
+.project-info-mini h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+.project-info-mini p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.btn-view-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-view-mini:hover {
+    gap: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .project-title {
+        font-size: 2rem;
+    }
+    
+    .project-actions {
+        margin-top: 2rem;
+    }
+    
+    .project-sidebar {
+        position: static;
+        margin-top: 3rem;
+    }
+}
+</style>
+{% endblock %}

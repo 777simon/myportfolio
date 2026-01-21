@@ -1,0 +1,259 @@
+{% extends 'pofolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<!-- Search Header -->
+<section class="search-header">
+    <div class="container">
+        <h1>Search Results</h1>
+        <p>Found <strong>{{ total_results }}</strong> results for "<strong>{{ query }}</strong>"</p>
+        
+        <form method="GET" action="{% url 'search' %}" class="search-form-header">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search again..." class="search-input-large">
+            <button type="submit" class="search-btn-large">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- Search Results -->
+<section class="search-results">
+    <div class="container">
+        
+        <!-- Projects Results -->
+        {% if projects %}
+        <div class="results-section">
+            <h2><i class="fas fa-code"></i> Projects ({{ projects|length }})</h2>
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-md-6 mb-3">
+                    <div class="result-card">
+                        <h4><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></h4>
+                        <p>{{ project.short_description|truncatewords:20 }}</p>
+                        <div class="result-meta">
+                            <span><i class="fas fa-tag"></i> {{ project.get_category_display }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Blog Results -->
+        {% if posts %}
+        <div class="results-section">
+            <h2><i class="fas fa-blog"></i> Blog Posts ({{ posts|length }})</h2>
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-md-6 mb-3">
+                    <div class="result-card">
+                        <h4><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h4>
+                        <p>{{ post.excerpt|truncatewords:20 }}</p>
+                        <div class="result-meta">
+                            <span><i class="fas fa-calendar"></i> {{ post.published_at|date:"M d, Y" }}</span>
+                            <span><i class="fas fa-clock"></i> {{ post.read_time }} min</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Services Results -->
+        {% if services %}
+        <div class="results-section">
+            <h2><i class="fas fa-briefcase"></i> Services ({{ services|length }})</h2>
+            <div class="row">
+                {% for service in services %}
+                <div class="col-md-6 mb-3">
+                    <div class="result-card">
+                        <h4>{{ service.title }}</h4>
+                        <p>{{ service.short_description }}</p>
+                        <a href="{% url 'contact' %}?service={{ service.slug }}" class="btn-small">Get Started</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- No Results -->
+        {% if total_results == 0 %}
+        <div class="no-results">
+            <i class="fas fa-search"></i>
+            <h3>No Results Found</h3>
+            <p>Try different keywords or browse our content:</p>
+            <div class="quick-links">
+                <a href="{% url 'projects' %}" class="quick-link">View Projects</a>
+                <a href="{% url 'blog' %}" class="quick-link">Read Blog</a>
+                <a href="{% url 'services' %}" class="quick-link">See Services</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.search-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 4rem 0 3rem;
+    color: white;
+    text-align: center;
+}
+
+.search-form-header {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.search-input-large {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+}
+
+.search-btn-large {
+    padding: 1rem 2rem;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn-large:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.search-results {
+    padding: 4rem 0;
+}
+
+.results-section {
+    margin-bottom: 4rem;
+}
+
+.results-section h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.results-section h2 i {
+    color: #667eea;
+}
+
+.result-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+}
+
+.result-card h4 {
+    margin-bottom: 0.8rem;
+}
+
+.result-card h4 a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.result-card h4 a:hover {
+    color: #667eea;
+}
+
+.result-card p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.result-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.result-meta i {
+    color: #667eea;
+}
+
+.btn-small {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: #667eea;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-small:hover {
+    background: #764ba2;
+    color: white;
+}
+
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-results i {
+    font-size: 5rem;
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+.quick-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.quick-link {
+    padding: 0.8rem 2rem;
+    background: #667eea;
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+    background: #764ba2;
+    color: white;
+    transform: translateY(-3px);
+}
+</style>
+{% endblock %}
