@@ -1,30 +1,16 @@
+{% extends 'pofolio/base.html' %}
 {% load static %}
-<!--
-<link href="{% static '/css/main.css' %}" rel="stylesheet" type="text/css"
 
-<h3>Hello world</h3>
+{% block title %}Home - Simon Macharia | Full Stack Developer{% endblock %}
 
-
--->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Simon Macharia</title>
-    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-   
-</head>
-<body>
-    <br>
+{% block content %}
+<!-- Hero Section with Cool Programming Aesthetic -->
+<section class="hero-section" id="home">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-md-3">
                 <div class="card card-body" id="profile-wrapper">
-                    <img id="profile-pic" src="{% static 'images/profilephoto.png' %}">
+                    <img id="profile-pic" src="{% static 'images/profilephoto.png' %}" alt="Simon Macharia">
                     <hr>
                     <h4 class="animate-text">Hi, I'm Simon!</h4>
                     <p class="animate-text delay">I love coding, doing research and collaborating</p>
@@ -53,19 +39,62 @@
                         that followed. Welcome aboard.
                     </p>
                     <ul class="social-links">
-                        <li><a href="https://www.facebook.com/simonmasharia777" target = '_blank'><img class="social" src="{% static 'images/facebookimg.jpeg' %}" ></a></li>
-                        <li><a href="https://www.instagram.com/simonmasharia777" target = '_blank'><img class="social" src="{% static 'images/instagramimg.jpeg' %}"></a></li>
-                        <li><a href="https://www.twitter.com/@SimonCh04638582" target = '_blank'><img class="social" src="{% static 'images/twitterimg.jpg' %}"></a></li>
-                        <li><a href="https://www.youtube.com/@simonchris1945" target = '_blank'><img class="social" src="{% static 'images/youtubeimg.png' %}"></a></li>
-                        <li><a href="https://github.com/777simon" target = '_blank'><img class="social" src="{% static 'images/githublogo.png' %}"></a></li>
-
-                    
+                        <li><a href="https://www.facebook.com/simonmasharia777" target="_blank"><img class="social" src="{% static 'images/facebookimg.jpeg' %}" alt="Facebook"></a></li>
+                        <li><a href="https://www.instagram.com/simonmasharia777" target="_blank"><img class="social" src="{% static 'images/instagramimg.jpeg' %}" alt="Instagram"></a></li>
+                        <li><a href="https://www.twitter.com/@SimonCh04638582" target="_blank"><img class="social" src="{% static 'images/twitterimg.jpg' %}" alt="Twitter"></a></li>
+                        <li><a href="https://www.youtube.com/@simonchris1945" target="_blank"><img class="social" src="{% static 'images/youtubeimg.png' %}" alt="YouTube"></a></li>
+                        <li><a href="https://github.com/777simon" target="_blank"><img class="social" src="{% static 'images/githublogo.png' %}" alt="GitHub"></a></li>
                     </ul>
                 </div>
-
             </div>
         </div>
-        <br>
+    </div>
+</section>
+
+<!-- Cool Programming Aesthetic Section -->
+<section class="code-aesthetic-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mb-5">
+                <h2 class="section-title">Where Code Meets Creativity</h2>
+                <p class="section-subtitle">Building digital experiences with modern technologies</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h5>Frontend Development</h5>
+                    <p>Creating responsive, interactive user interfaces with HTML, CSS, and JavaScript</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h5>Backend Development</h5>
+                    <p>Building robust server-side applications with Python and Django framework</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h5>Database Management</h5>
+                    <p>Designing efficient databases with PostgreSQL and MySQL</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience & Skills Section -->
+<section class="experience-section">
+    <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-body">
@@ -86,16 +115,16 @@
                     <h5>What I Know</h5>
                     <hr>
                     <p>
-                        Programming Languages: Python (Django), Java, C++, and JavaScript.
+                        <strong>Programming Languages:</strong> Python (Django), Java, C++, and JavaScript.
                     </p>
                     <p>
-                        Web Technologies: Full-stack development using HTML5, CSS3, and Client-Side programming. 
+                        <strong>Web Technologies:</strong> Full-stack development using HTML5, CSS3, and Client-Side programming. 
                     </p>
                     <p>
-                        Database Management: Advanced Database Programming with MySQL and PostgreSQL.
+                        <strong>Database Management:</strong> Advanced Database Programming with MySQL and PostgreSQL.
                     </p>
                     <p>
-                        Networking & ICT: Local Area Network (LAN) troubleshooting, data communication, and hardware/software maintenance.
+                        <strong>Networking & ICT:</strong> Local Area Network (LAN) troubleshooting, data communication, and hardware/software maintenance.
                     </p>
                 </div>
             </div>
@@ -111,25 +140,280 @@
                         I am currently diving deeper into Advanced Database Programming and Intelligent Software Systems. 
                         I am specifically focusing on integrating advanced search features like Elasticsearch and exploring Multimedia Systems to create more engaging, modern user experiences.
                     </p>
-                    <p></p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card card-body">
-                    <h5>My Short Term  and Long Terms Goals</h5>
+                    <h5>My Short Term and Long Terms Goals</h5>
                     <hr>
-                    <p><b>Short Term: </b> 
-
-                    </p>
-                    <p><b>Long Term: </b>
-                        I aim to design large-scale digital infrastructures that bridge the gap between complex backend logic and intuitive frontend design
-                    </p>
+                    <p><strong>Short Term:</strong> Build innovative projects that showcase my full-stack development skills and contribute to open-source communities.</p>
+                    <p><strong>Long Term:</strong> I aim to design large-scale digital infrastructures that bridge the gap between complex backend logic and intuitive frontend design.</p>
                 </div>
             </div>
         </div>
-        <br>
     </div>
+</section>
 
-    <script src="{% static 'js/main.js' %}"></script>
-</body>
-</html>
+<!-- Video Section: Why Your Business Needs a Website -->
+<section class="video-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="video-card">
+                    <h3 class="video-title">Why Your Business Needs a Website</h3>
+                    <p class="video-description">
+                        In today's digital age, a professional website is essential for business success. 
+                        Watch this video to discover how a well-designed website can transform your business presence.
+                    </p>
+                    <div class="video-wrapper">
+                        <!-- Replace with your actual video -->
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <p>Video Coming Soon</p>
+                            <!-- Once you have the video, use: -->
+                            <!-- <iframe src="YOUR_VIDEO_URL" frameborder="0" allowfullscreen></iframe> -->
+                        </div>
+                    </div>
+                    <div class="video-cta">
+                        <p>Ready to take your business online?</p>
+                        <a href="{% url 'contact' %}" class="btn-video-cta">Get Started Today</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Let's Build Something Amazing Together</h2>
+                <p>Have a project in mind? Let's discuss how I can help bring your ideas to life.</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'projects' %}" class="btn-cta-primary">
+                        <i class="fas fa-code"></i> View My Work
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn-cta-secondary">
+                        <i class="fas fa-envelope"></i> Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Hero Section Styles */
+.hero-section {
+    padding: 2rem 0;
+}
+
+/* Code Aesthetic Section */
+.code-aesthetic-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+.tech-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+
+.tech-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+}
+
+.tech-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tech-icon i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+/* Experience Section */
+.experience-section {
+    padding: 3rem 0;
+}
+
+/* Video Section */
+.video-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.video-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.video-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.video-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+.video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.video-placeholder i {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.video-cta {
+    text-align: center;
+}
+
+.video-cta p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.btn-video-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-video-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-cta-primary, .btn-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-cta-primary {
+    background: white;
+    color: #667eea;
+}
+
+.btn-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    color: #667eea;
+}
+
+.btn-cta-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-cta-secondary:hover {
+    background: white;
+    color: #667eea;
+    transform: translateY(-3px);
+}
+</style>
+{% endblock %}
