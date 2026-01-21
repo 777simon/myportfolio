@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simon Macharia - Full Stack Developer specializing in Django, Python, and Web Development">
+    <title>{% block title %}{{ page_title|default:"Simon Macharia - Full Stack Developer" }}{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    
+    <!-- ========================================
+         GLASS MORPHISM NAVBAR
+         ======================================== -->
+    <nav class="navbar-glass" id="mainNavbar">
+        <div class="container-fluid">
+            <div class="navbar-content">
+                <!-- Logo/Brand -->
+                <div class="navbar-brand-wrapper">
+                    <a href="{% url 'home' %}" class="navbar-logo">
+                        <span class="logo-bracket">{</span>
+                        <span class="logo-text">SM</span>
+                        <span class="logo-bracket">}</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Links -->
+                <div class="navbar-links desktop-nav">
+                    <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                        <i class="fas fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="{% url 'projects' %}" class="nav-link {% if 'project' in request.resolver_match.url_name %}active{% endif %}">
+                        <i class="fas fa-code"></i>
+                        <span>Projects</span>
+                    </a>
+                    <a href="{% url 'services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Services</span>
+                    </a>
+                    <a href="{% url 'blog' %}" class="nav-link {% if 'blog' in request.resolver_match.url_name %}active{% endif %}">
+                        <i class="fas fa-blog"></i>
+                        <span>Blog</span>
+                    </a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="navbar-actions desktop-nav">
+                    <a href="{% static 'resume/Simon_Macharia_Resume.pdf' %}" class="btn-resume" target="_blank">
+                        <i class="fas fa-download"></i>
+                        <span>Resume</span>
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn-hire">
+                        <i class="fas fa-rocket"></i>
+                        <span>Hire Me</span>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="scroll-progress" id="scrollProgress"></div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+                <a href="{% url 'home' %}" class="mobile-logo">
+                    <span class="logo-bracket">{</span>
+                    <span class="logo-text">SM</span>
+                    <span class="logo-bracket">}</span>
+                </a>
+                <button class="mobile-menu-close" id="mobileMenuClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-nav-links">
+                <a href="{% url 'home' %}" class="mobile-nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="{% url 'about' %}" class="mobile-nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>About</span>
+                </a>
+                <a href="{% url 'projects' %}" class="mobile-nav-link">
+                    <i class="fas fa-code"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="{% url 'services' %}" class="mobile-nav-link">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Services</span>
+                </a>
+                <a href="{% url 'blog' %}" class="mobile-nav-link">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog</span>
+                </a>
+                <a href="{% url 'contact' %}" class="mobile-nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+            
+            <div class="mobile-menu-actions">
+                <a href="{% static 'resume/Simon_Macharia_Resume.pdf' %}" class="mobile-btn-resume" target="_blank">
+                    <i class="fas fa-download"></i>
+                    <span>Download Resume</span>
+                </a>
+                <a href="{% url 'contact' %}" class="mobile-btn-hire">
+                    <i class="fas fa-rocket"></i>
+                    <span>Hire Me</span>
+                </a>
+            </div>
+            
+            <div class="mobile-menu-social">
+                <a href="https://github.com/777simon" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/simonmacharia" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/@SimonCh04638582" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.facebook.com/simonmasharia777" target="_blank"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ========================================
+         MAIN CONTENT
+         ======================================== -->
+    <main id="mainContent">
+        {% if messages %}
+            <div class="container mt-4">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Simon Macharia</h5>
+                    <p>Full Stack Developer specializing in Django, Python, and modern web technologies.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/777simon" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/simonmacharia" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://twitter.com/@SimonCh04638582" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/simonmasharia777" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'projects' %}">Projects</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Info</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-envelope"></i> simon@example.com</li>
+                        <li><i class="fas fa-phone"></i> +254 XXX XXX XXX</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Simon Macharia. All rights reserved. Built with Django & Love ❤️</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ========================================
+         SCRIPTS
+         ======================================== -->
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/navbar.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
