@@ -16,7 +16,7 @@ def home(request):
         'testimonials': Testimonial.objects.filter(active=True, featured=True)[:3],
         'page_title': 'Home - Simon Macharia'
     }
-    return render(request, 'portfolio/home.html', context)
+    return render(request, 'pofolio/home.html', context)
 
 
 # ========================================
@@ -29,7 +29,7 @@ def about(request):
         'testimonials': Testimonial.objects.filter(active=True),
         'page_title': 'About Me - Simon Macharia'
     }
-    return render(request, 'portfolio/about.html', context)
+    return render(request, 'pofolio/about.html', context)
 
 
 # ========================================
@@ -66,7 +66,7 @@ def projects(request):
         'search_query': search,
         'page_title': 'Projects - Simon Macharia'
     }
-    return render(request, 'portfolio/projects.html', context)
+    return render(request, 'pofolio/projects.html', context)
 
 
 def project_detail(request, slug):
@@ -79,7 +79,7 @@ def project_detail(request, slug):
         'related_projects': related_projects,
         'page_title': f'{project.title} - Projects'
     }
-    return render(request, 'portfolio/project_detail.html', context)
+    return render(request, 'pofolio/project_detail.html', context)
 
 
 # ========================================
@@ -119,7 +119,7 @@ def blog(request):
         'search_query': search,
         'page_title': 'Blog - Simon Macharia'
     }
-    return render(request, 'portfolio/blog.html', context)
+    return render(request, 'pofolio/blog.html', context)
 
 
 def blog_detail(request, slug):
@@ -140,7 +140,7 @@ def blog_detail(request, slug):
         'related_posts': related_posts,
         'page_title': f'{post.title} - Blog'
     }
-    return render(request, 'portfolio/blog_detail.html', context)
+    return render(request, 'pofolio/blog_detail.html', context)
 
 
 # ========================================
@@ -156,7 +156,7 @@ def services(request):
         'testimonials': testimonials,
         'page_title': 'Services - Simon Macharia'
     }
-    return render(request, 'portfolio/services.html', context)
+    return render(request, 'pofolio/services.html', context)
 
 
 # ========================================
@@ -191,7 +191,7 @@ def contact(request):
     context = {
         'page_title': 'Contact Me - Simon Macharia'
     }
-    return render(request, 'portfolio/contact.html', context)
+    return render(request, 'pofolio/contact.html', context)
 
 
 # ========================================
@@ -234,4 +234,4 @@ def search(request):
         'total_results': projects.count() + posts.count() + services_list.count(),
         'page_title': f'Search: {query}'
     }
-    return render(request, 'portfolio/search.html', context)
+    return render(request, 'pofolio/search.html', context)
