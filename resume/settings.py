@@ -136,3 +136,18 @@ STATICFILES_DIRS = [
 # This helps WhiteNoise serve files efficiently
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 WHITENOISE_USE_FINDERS = True
+
+
+# ========================================
+# MESSAGES FRAMEWORK (for success/error messages)
+# ========================================
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}

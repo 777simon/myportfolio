@@ -20,7 +20,18 @@
             <div class="col-lg-6 mb-4">
                 <div class="contact-form-wrapper">
                     <h2>Send Me a Message</h2>
-                    <form method="POST" class="contact-form">
+                    
+                    <!-- Success/Error Messages -->
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-animated">
+                            <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST" class="contact-form" id="contactForm">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="name">Name *</label>
@@ -32,7 +43,7 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone" class="form-control">
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="+254 XXX XXX XXX">
                         </div>
                         <div class="form-group">
                             <label for="subject">Subject *</label>
@@ -42,8 +53,13 @@
                             <label for="message">Message *</label>
                             <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
                         </div>
-                        <button type="submit" class="btn-submit">
-                            <i class="fas fa-paper-plane"></i> Send Message
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span class="btn-text">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </span>
+                            <span class="btn-loader" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Sending...
+                            </span>
                         </button>
                     </form>
                 </div>
@@ -85,10 +101,37 @@
                     <div class="social-connect">
                         <h5>Connect With Me</h5>
                         <div class="social-links">
-                            <a href="https://github.com/777simon" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                            <a href="https://twitter.com/@SimonCh04638582" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="https://www.facebook.com/simonmasharia777" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://github.com/777simon" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/simon-macharia" target="_blank" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://twitter.com/@SimonCh04638582" target="_blank" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.facebook.com/simonmasharia777" target="_blank" title="Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Hours -->
+                    <div class="business-hours">
+                        <h5>Business Hours</h5>
+                        <div class="hours-list">
+                            <div class="hour-item">
+                                <span>Monday - Friday</span>
+                                <span>9:00 AM - 6:00 PM</span>
+                            </div>
+                            <div class="hour-item">
+                                <span>Saturday</span>
+                                <span>10:00 AM - 4:00 PM</span>
+                            </div>
+                            <div class="hour-item">
+                                <span>Sunday</span>
+                                <span>Closed</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,6 +168,49 @@ h2 {
     font-weight: 700;
 }
 
+/* Alert Messages */
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #d4edda;
+    border: 2px solid #28a745;
+    color: #155724;
+}
+
+.alert-error {
+    background: #f8d7da;
+    border: 2px solid #dc3545;
+    color: #721c24;
+}
+
+.alert-animated {
+    animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert i {
+    font-size: 1.5rem;
+}
+
+/* Form Styles */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -148,8 +234,18 @@ label {
 .form-control:focus {
     outline: none;
     border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: #dc3545;
+}
+
+.form-control:valid:not(:placeholder-shown) {
+    border-color: #28a745;
+}
+
+/* Submit Button */
 .btn-submit {
     width: 100%;
     padding: 1rem;
@@ -161,17 +257,33 @@ label {
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-submit:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+/* Loading Animation */
+.btn-loader {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.7rem;
 }
 
-.btn-submit:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-}
-
+/* Contact Info */
 .contact-info {
     margin-bottom: 2rem;
 }
@@ -183,6 +295,12 @@ label {
     background: #f8f9fa;
     border-radius: 15px;
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
 }
 
 .info-icon {
@@ -206,6 +324,11 @@ label {
 .info-item p {
     color: #666;
     margin: 0;
+}
+
+/* Social Links */
+.social-connect {
+    margin-bottom: 2rem;
 }
 
 .social-connect h5 {
@@ -236,5 +359,110 @@ label {
     color: white;
     transform: translateY(-5px);
 }
+
+/* Business Hours */
+.business-hours {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.business-hours h5 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.hour-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.hour-item:last-child {
+    border-bottom: none;
+}
+
+.hour-item span:first-child {
+    font-weight: 500;
+    color: #333;
+}
+
+.hour-item span:last-child {
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-hero {
+        padding: 3rem 0 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
 </style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Form submission with loading state
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoader = submitBtn.querySelector('.btn-loader');
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'flex';
+    
+    // Form will submit normally, loading state will show until page reloads
+});
+
+// Auto-hide success messages after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert-success');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.style.transition = 'all 0.5s ease-out';
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-20px)';
+            setTimeout(() => alert.remove(), 500);
+        }, 5000);
+    });
+});
+
+// Form validation feedback
+const formInputs = document.querySelectorAll('.form-control');
+formInputs.forEach(input => {
+    input.addEventListener('blur', function() {
+        if (this.value.trim() !== '') {
+            if (this.checkValidity()) {
+                this.style.borderColor = '#28a745';
+            } else {
+                this.style.borderColor = '#dc3545';
+            }
+        }
+    });
+    
+    input.addEventListener('input', function() {
+        if (this.style.borderColor) {
+            this.style.borderColor = '#e9ecef';
+        }
+    });
+});
+</script>
 {% endblock %}
